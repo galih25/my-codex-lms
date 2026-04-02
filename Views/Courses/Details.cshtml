@@ -1,0 +1,71 @@
+@model Course
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Course details</p>
+        <h1>@Model.Title</h1>
+        <p class="lead">@Model.Description</p>
+    </div>
+    <a class="button-secondary" asp-action="Index">Back to catalog</a>
+</section>
+
+<section class="grid-two">
+    <div class="panel">
+        <h2>Overview</h2>
+        <dl class="detail-list">
+            <div>
+                <dt>Category</dt>
+                <dd>@Model.Category</dd>
+            </div>
+            <div>
+                <dt>Duration</dt>
+                <dd>@Model.DurationInWeeks weeks</dd>
+            </div>
+            <div>
+                <dt>Capacity</dt>
+                <dd>@Model.MaxStudents learners</dd>
+            </div>
+            <div>
+                <dt>Available seats</dt>
+                <dd>@Model.RemainingSeats</dd>
+            </div>
+        </dl>
+    </div>
+
+    <div class="panel">
+        <h2>Enrollments</h2>
+        <div class="table-shell">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Email</th>
+                        <th>Completion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Enrollments.Any())
+                    {
+                        foreach (var enrollment in Model.Enrollments)
+                        {
+                            <tr>
+                                <td>@enrollment.Student?.FullName</td>
+                                <td>@enrollment.Student?.Email</td>
+                                <td>@enrollment.CompletionPercentage%</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3">No students are enrolled yet.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

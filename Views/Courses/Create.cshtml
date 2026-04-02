@@ -1,0 +1,43 @@
+@model Course
+@{
+    ViewData["Title"] = "Create course";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Administration</p>
+        <h1>Create a course</h1>
+        <p class="lead">Add a new course to the LMS catalog using server-side validation.</p>
+    </div>
+</section>
+
+<section class="panel form-panel">
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <label asp-for="Title"></label>
+        <input asp-for="Title" />
+        <span asp-validation-for="Title"></span>
+
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" rows="4"></textarea>
+        <span asp-validation-for="Description"></span>
+
+        <label asp-for="Category"></label>
+        <input asp-for="Category" />
+        <span asp-validation-for="Category"></span>
+
+        <label asp-for="DurationInWeeks"></label>
+        <input asp-for="DurationInWeeks" type="number" min="1" max="52" />
+        <span asp-validation-for="DurationInWeeks"></span>
+
+        <label asp-for="MaxStudents"></label>
+        <input asp-for="MaxStudents" type="number" min="0" max="9999" />
+        <span asp-validation-for="MaxStudents"></span>
+
+        <div class="form-actions">
+            <button type="submit" class="button-primary">Save course</button>
+            <a class="button-secondary" asp-action="Index">Cancel</a>
+        </div>
+    </form>
+</section>

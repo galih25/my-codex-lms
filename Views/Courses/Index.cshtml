@@ -1,0 +1,44 @@
+@model IEnumerable<Course>
+@{
+    ViewData["Title"] = "Courses";
+    var categories = ViewBag.Categories as IEnumerable<string> ?? Array.Empty<string>();
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Catalog</p>
+        <h1>Courses</h1>
+        <p class="lead">Browse course offerings, filter by category, and track seat availability.</p>
+    </div>
+    <a class="button-primary" asp-action="Create">Add new course</a>
+</section>
+
+<form method="get" class="filter-bar">
+    <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" placeholder="Search courses" />
+    <select name="category">
+        <option value="">All categories</option>
+        @foreach (var item in categories)
+        {
+            <option value="@item" selected="@(item == (string?)ViewBag.SelectedCategory)">@item</option>
+        }
+    </select>
+    <button type="submit" class="button-secondary">Apply</button>
+</form>
+
+<div class="course-grid">
+    @foreach (var course in Model)
+    {
+        <article class="course-card">
+            <div>
+                <p class="course-category">@course.Category</p>
+                <h2>@course.Title</h2>
+                <p>@course.Description</p>
+            </div>
+            <ul class="meta-list">
+                <li><strong>Duration:</strong> @course.DurationInWeeks weeks</li>
+                <li><strong>Seats:</strong> @course.Enrollments.Count / @course.MaxStudents</li>
+            </ul>
+            <a asp-action="Details" asp-route-id="@course.Id">View details</a>
+        </article>
+    }
+</div>
