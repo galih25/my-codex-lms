@@ -1,0 +1,92 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<section class="hero-panel">
+    <div>
+        <p class="eyebrow">Learning management system</p>
+        <h1>Manage courses, students, and progress in one ASP.NET MVC app.</h1>
+        <p class="lead">This starter LMS uses ASP.NET Core MVC, Entity Framework Core, and SQL Server so you can administer training programs with a familiar Microsoft stack.</p>
+    </div>
+    <a class="button-primary" asp-controller="Courses" asp-action="Create">Create a course</a>
+</section>
+
+<section class="stats-grid">
+    <article class="stat-card">
+        <span>Total courses</span>
+        <strong>@Model.CourseCount</strong>
+    </article>
+    <article class="stat-card">
+        <span>Registered students</span>
+        <strong>@Model.StudentCount</strong>
+    </article>
+    <article class="stat-card">
+        <span>Enrollments</span>
+        <strong>@Model.EnrollmentCount</strong>
+    </article>
+    <article class="stat-card">
+        <span>Average completion</span>
+        <strong>@Model.AverageCompletion.ToString("0")%</strong>
+    </article>
+</section>
+
+<section class="grid-two">
+    <div class="panel">
+        <div class="section-heading">
+            <h2>Featured courses</h2>
+            <a asp-controller="Courses" asp-action="Index">View all</a>
+        </div>
+
+        <div class="course-list">
+            @foreach (var course in Model.FeaturedCourses)
+            {
+                <article class="course-card">
+                    <div>
+                        <p class="course-category">@course.Category</p>
+                        <h3>@course.Title</h3>
+                        <p>@course.Description</p>
+                    </div>
+                    <dl>
+                        <div>
+                            <dt>Duration</dt>
+                            <dd>@course.DurationInWeeks weeks</dd>
+                        </div>
+                        <div>
+                            <dt>Seats left</dt>
+                            <dd>@course.RemainingSeats</dd>
+                        </div>
+                    </dl>
+                </article>
+            }
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="section-heading">
+            <h2>Recent enrollments</h2>
+        </div>
+
+        <div class="table-shell">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Progress</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var enrollment in Model.RecentEnrollments)
+                    {
+                        <tr>
+                            <td>@enrollment.Student?.FullName</td>
+                            <td>@enrollment.Course?.Title</td>
+                            <td>@enrollment.CompletionPercentage%</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

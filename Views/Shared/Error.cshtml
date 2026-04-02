@@ -1,0 +1,18 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Application error</p>
+        <h1>Something went wrong.</h1>
+        <p class="lead">The request could not be completed. Review the request id below for troubleshooting.</p>
+    </div>
+    <a class="button-secondary" asp-controller="Home" asp-action="Index">Return home</a>
+</section>
+
+<section class="panel">
+    <h2>Diagnostic information</h2>
+    <p><strong>Request ID:</strong> @(Model.ShowRequestId ? Model.RequestId : "Unavailable")</p>
+</section>
